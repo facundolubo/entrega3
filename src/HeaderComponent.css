@@ -1,0 +1,32 @@
+:root {
+    --BW: #33ecce;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    width: 100vw;
+    height: 20vh;
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 5vw;
+    margin-left: 15px;
+    margin-top: -20px;
+    position: absolute;
+}
+
+.lema {
+    text-shadow: 0 0 10px rgba(51, 236, 206, 0.9);
+    color: var(--BW);
+}
+
+h1 {
+    text-shadow: 0 0 10px rgba(51, 236, 206, 0.9);
+    color: var(--BW);
+}
