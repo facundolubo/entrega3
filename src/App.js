@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import HeaderComponent from './HeaderComponent';
-import FooterComponent from './FooterComponent';
-import NavBarComponent from './NavBarComponent';
-import './index.css';
+import HeaderComponent from './components/HeaderComponent';
+import FooterComponent from './components/FooterComponent';
+import NavBarComponent from './components/NavBarComponent';
+import './index.css'; // si lo saco se rompe el css por ahora..
 
 
 function App() {
