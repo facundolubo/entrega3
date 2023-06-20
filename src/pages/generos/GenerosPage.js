@@ -4,7 +4,9 @@ import Table from "../components/Table";
 function GenerosPage() {
   return (
     <div>
-      <Table type="generos"></Table>
+      <HeaderComponent />
+      <NavBarComponent />5
+      <FooterComponent />
     </div>
   );
 }
