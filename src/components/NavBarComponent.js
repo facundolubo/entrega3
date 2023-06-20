@@ -4,9 +4,9 @@ function NavBarComponent() {
   return (
     <nav>
       <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#listaGeneros">Listado de Generos</a></li>
-        <li><a href="#listaPlataformas">Listado de Plataformas</a></li>
+        <li><a href="/">Home</a></li>
+        <li><a href="/generos">Listado de Generos</a></li>
+        <li><a href="/plataformas">Listado de Plataformas</a></li>
       </ul>
     </nav>
   );

@@ -50,13 +50,13 @@ function App() {
       <div>
         <HeaderComponent />
         <NavBarComponent />
-        <FooterComponent />
         <Routes>
           {/* Estas rutas seran entendida por tu yo del futuro (?) */}
           <Route path="/" element={<Dashboard/>} /> 
           <Route path="/generos" element={<Generos/>} />
           <Route path="/plataformas" element={<Plataformas/>} />
         </Routes>
+        <FooterComponent />
       </div>
     </BrowserRouter>
   );
