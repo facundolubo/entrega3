@@ -6,7 +6,7 @@ import './index.css';
 
 
 function App() {
-  const [games, setGames] = useState([]);
+ /* const [games, setGames] = useState([]);
   const [searchName, setSearchName] = useState('');
   const [searchGenre, setSearchGenre] = useState('');
   const [searchPlatform, setSearchPlatform] = useState('');
@@ -40,7 +40,7 @@ function App() {
     const sortedGames = undefined;
     setGames(sortedGames);
   };
-
+*/
   return (
     <div>
       <HeaderComponent />
