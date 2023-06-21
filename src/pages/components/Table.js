@@ -62,7 +62,6 @@ function Table(props) {
         });
 
         input.value = nombre;
-
         closeX.addEventListener("click", () => {
             body.style = "overflow-y:auto";
             moddle.classList.add("hidden");
