@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom';
 function HeaderComponent() {
   return (
   <header>
-    <a href="/">
+    <Link to="/">
       <img className="logo" src={logo} alt="Joystick como logo de la página" />
-    </a>
+    </Link>
     <div className="titulo">
       <Link to="/">
         <h1>Bienvenido</h1>
