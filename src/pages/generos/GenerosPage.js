@@ -1,12 +1,13 @@
+import React, { useState, useEffect } from "react";
+
 import "./GenerosPage.css";
 import Table from "../components/Table";
+
 
 function GenerosPage() {
   return (
     <div>
-      <HeaderComponent />
-      <NavBarComponent />
-      <FooterComponent />
+        <Table type='generos'></Table>
     </div>
   );
 }
