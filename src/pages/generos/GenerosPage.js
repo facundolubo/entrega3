@@ -5,7 +5,7 @@ function GenerosPage() {
   return (
     <div>
       <HeaderComponent />
-      <NavBarComponent />5
+      <NavBarComponent />
       <FooterComponent />
     </div>
   );
