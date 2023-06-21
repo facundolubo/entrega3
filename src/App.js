@@ -4,7 +4,7 @@ import FooterComponent from './components/FooterComponent';
 import NavBarComponent from './components/NavBarComponent';
 import './index.css'; // si lo saco se rompe el css por ahora..
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Generos from './pages/generos/Generos';
+import Generos from './pages/generos/GenerosPage';
 import Plataformas from './pages/plataformas/Plataformas';
 import Dashboard from './pages/dashboard/Dashboard';
 
