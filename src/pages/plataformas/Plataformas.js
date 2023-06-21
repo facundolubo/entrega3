@@ -1,9 +1,10 @@
-function Plataformas () {
-    return (
-        <div>
-            <h1>Plataformas</h1>
-        </div>
-    );
+import Table from "../components/Table";
+function Plataformas() {
+  return (
+    <div>
+      <Table type={'plataformas'}></Table>
+    </div>
+  );
 }
 
 export default Plataformas;
