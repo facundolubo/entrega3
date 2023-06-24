@@ -153,11 +153,19 @@
     display: flex;
     width: 100%;
     justify-content: center;
+    align-items: center;
+}
+.TitleHeader i{
+    position: absolute;
+    right: 30vw;
+    border: 3px solid rgb(220, 220, 220);
+    border-radius: 100px;
+    padding: 5px 10px;
+    cursor: pointer;
 }
 .TitleHeader h2{
     display: flex;
     width: 100%;
-    margin-right: -12px;
     justify-content: center;
 }
 h3{
@@ -165,4 +173,18 @@ h3{
     color: var(--BW);
     width: 100%;
     text-align: center;
+}
+.container-list div{
+        WIDTH: 100%;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 30px;
+}
+.container-list div a{
+    background-color: #131313;
+    padding: 9px;
+    border-radius: 5px;
+}
+.container-list div a:hover{
+    background-color: #181818;
 }
