@@ -1,7 +1,11 @@
 :root {
     --BW: #33ecce;
 }
+a{
+    all:unset;
+    cursor:pointer;
 
+}
 * {
     margin: 0;
     padding: 0;
