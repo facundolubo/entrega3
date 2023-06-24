@@ -7,7 +7,6 @@ import Table from "../components/Table";
 function GenerosPage() {
   return (
     <div>
-      <a href="/generos/new">Agregar Gen</a>
       <Table type="generos"></Table>
     </div>
   );
