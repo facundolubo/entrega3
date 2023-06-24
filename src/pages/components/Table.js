@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 
 import "./Table.css";
-
 import axios from "axios";
+
 function Table(props) {
-    const type = props.type;
+    const { type } = props;
 
     const [lista, setLista] = useState([]);
-    const getList = () => {
-        axios
+    const getList = async() => {
+        await axios
         .get(`http://localhost:8000/${type}`)
         .then(function (response) {
             setLista(response.data);
@@ -19,17 +19,20 @@ function Table(props) {
     const deleteList = (id) => {
         const result = window.confirm(
           "¿Estás que deceas Eliminar el id " + id + "?"
-        );
+        );  
         if(result){
-            axios
-              .delete(`http://localhost:8000/${type}/${id}`)
-              .then((response) => {
-                // Actualizar la lista de géneros después de eliminar uno
-                getList();
-              })
-              .catch((error) => {
-                console.error("Error al eliminar el género:", error);
-              });
+            const deletes = async ()=>{
+                await axios
+                .delete(`http://localhost:8000/${type}/${id}`)
+                .then((response) => {
+                    // Actualizar la lista de géneros después de eliminar uno
+                    getList();
+                })
+                .catch((error) => {
+                    console.error("Error al eliminar el género:", error);
+                });
+            }
+            deletes();
         }
         
     };
@@ -69,39 +72,22 @@ function Table(props) {
         moddle.classList.remove("hidden");
 
         
-        outed.addEventListener("click", () => {
-            exit();
-        });
+        outed.addEventListener("click",()=> exit());
 
         save.addEventListener("click", () => {
-            const result = window.confirm(
-                "¿Estás que deceas editar el id " + id + "?"
-            );
-            if (result) {
-                // El usuario hizo clic en "Aceptar" en la ventana emergente de confirmación
-                // Realiza las acciones necesarias para guardar los cambios
                 moddle.classList.add("hidden");
                 let nombre = {
                     nombre: input.value,
                 };
                 console.log(nombre);
                 axios
-                .put(`http://localhost:8000/${type}}/${id}`, nombre, {
-                    headers: {
-                    "Access-Control-Allow-Origin": "*", // Configura el encabezado CORS para permitir todas las solicitudes desde cualquier origen
-                    "Access-Control-Allow-Methods": "PUT,OPTIONS", // Configura los métodos permitidos en el encabezado CORS
-                    "Access-Control-Allow-Headers": "Content-Type, Authorization", // Configura los encabezados permitidos en el encabezado CORS
-                    },
-                })
+                .put(`http://localhost:8000/${type}/${id}`, nombre)
                 .then(function (response) {
-                    setLista(response.data);
+                    //!alerta del response
+                    getList();
                 })
                 .catch((error) => console.error(error));
                 exit();
-            }
-            else{
-                exit();
-            }
         });
     };
 
@@ -112,61 +98,64 @@ function Table(props) {
     
 
     return (
-        <div className="generoApp">
+      <div className="generoApp">
         <div className="moddle hidden">
-            <div className="out" id="out"></div>
-            <div className="moddle-element">
-                <i>x</i>
-                <header>
-                    <h3>EDITAR</h3>
-                </header>
-                <main>
-                    <form>
-                    <label>nombre</label>
-                    <input id="nombre"></input>
-                    <button id="save" type="button">
-                        save
-                    </button>
-                    </form>
-                </main>
-            </div>
+          <div className="out" id="out"></div>
+          <div className="moddle-element">
+            <i>x</i>
+            <header>
+              <h3>EDITAR</h3>
+            </header>
+            <main>
+              <form>
+                <label>nombre</label>
+                <input id="nombre"></input>
+                <button id="save" type="button">
+                  save
+                </button>
+              </form>
+            </main>
+          </div>
         </div>
         <header className="TitleHeader">
-            <h2>Lista {props.type}</h2>
+          <h2>Lista {props.type}</h2>
         </header>
         <main>
-            <div className="container-list">
+          <div className="container-list">
+            <div>
+              <a>Agregar Genero</a>
+            </div>
             <table id="tableModdle">
-                <thead>
+              <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Nombre</th>
-                    <th>accion</th>
+                  <th>Id</th>
+                  <th>Nombre</th>
+                  <th>accion</th>
                 </tr>
-                </thead>
-                <tbody>
-                {lista.map((data) => (
-                    <tr>
+              </thead>
+              <tbody>
+                {lista.map((data, index) => (
+                  <tr key={index}>
                     <td>{data.id}</td>
                     <td>{data.nombre}</td>
                     <td>
-                        <button
-                            id="editar"
-                            onClick={() => editList(data.id, data.nombre)}
-                        >
-                            editar
-                        </button>
-                        <button id="eliminar" onClick={() => deleteList(data.id)}>
-                            eliminar
-                        </button>
+                      <button
+                        id="editar"
+                        onClick={() => editList(data.id, data.nombre)}
+                      >
+                        editar
+                      </button>
+                      <button id="eliminar" onClick={() => deleteList(data.id)}>
+                        eliminar
+                      </button>
                     </td>
-                    </tr>
+                  </tr>
                 ))}
-                </tbody>
+              </tbody>
             </table>
-            </div>
+          </div>
         </main>
-        </div>
+      </div>
     );
 }
 
