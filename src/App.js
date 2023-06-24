@@ -6,7 +6,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Generos from './pages/generos/GenerosPage';
 import Plataformas from './pages/plataformas/Plataformas';
 import Dashboard from './pages/dashboard/Dashboard';
-import New from './pages/components/New';
 
 function App() {
   
@@ -19,7 +18,6 @@ function App() {
           {/* Estas rutas seran entendida por tu yo del futuro (?) */}
           <Route path="/" element={<Dashboard />} />
           <Route path="/generos" element={<Generos />} />
-          <Route path="/generos/new" element={<New tipo="generos"></New>} />
           <Route path="/plataformas" element={<Plataformas />} />
         </Routes>
         <FooterComponent />
