@@ -1,0 +1,25 @@
+.NewForm{
+    height: 70vh;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    color:white;
+}
+.NewForm h2{
+    margin: 10vh 0;
+}
+.NewForm button{
+    cursor: pointer;
+    margin: 20px 0 ;
+}
+.NewForm label{
+    margin-bottom: 10px;
+}
+
+.NewForm div{
+    width: 35%;
+    display: flex;
+    justify-content: end;
+}

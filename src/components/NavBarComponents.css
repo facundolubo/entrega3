@@ -1,0 +1,29 @@
+nav{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+nav ul{
+    display: flex;
+    margin-right: -30px;
+    text-align: center;
+    color: aqua;
+    background-color: #1f1b1b7a;
+    height: 30px;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    width: 60%;
+}
+nav ul li a:hover{
+    text-shadow: 0px 0px 10px aqua;
+}
+nav ul li{
+    list-style: none;
+    display: flex;
+    margin:0 10px;
+}
+nav ul li a{
+    all: unset;
+    cursor: pointer;
+}
