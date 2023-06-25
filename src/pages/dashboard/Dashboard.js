@@ -47,7 +47,7 @@ function Dashboard () {
             })
             .catch((error) => console.error(error));
     }, []);
-    
+
     return (
     <>
     <table className="Dashboard">
@@ -76,4 +76,4 @@ function Dashboard () {
     );
 }
 
-export default Dashboard;
+export default Dashboard;   
