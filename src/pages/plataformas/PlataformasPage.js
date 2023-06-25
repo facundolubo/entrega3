@@ -1,8 +1,8 @@
-
+import Table from "../components/Table";
 export default function Plataformas () {
     return (
         <div>
-            <h1>Plataformas</h1>
+            <Table type="plataformas"></Table> 
         </div>
     );
 }
