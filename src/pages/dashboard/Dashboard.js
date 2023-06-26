@@ -19,6 +19,7 @@ function Dashboard() {
     }
 
     try {
+      /*La generos response es para cruzar el id con el nombre*/
       const generosResponse = await axios.get("http://localhost:8000/generos");
       setListGen(generosResponse.data);
     } catch (error) {
@@ -26,6 +27,7 @@ function Dashboard() {
     }
 
     try {
+      /*La plataformas response es para cruzar el id con el nombre*/
       const plataformasResponse = await axios.get("http://localhost:8000/plataformas");
       setListPlat(plataformasResponse.data);
     } catch (error) {
