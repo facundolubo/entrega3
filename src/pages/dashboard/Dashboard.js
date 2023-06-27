@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
-const Dashboard = () => {
-//    const [lista, setLista] = useState([]);
+import New from '../components/New';
+function Dashboard (props) {
+    const type = props.type;
+//  const [lista, setLista] = useState([]);
     const [nombre, setNombre] = useState('');
     const [genero, setGenero] = useState('');
     const [listGen, setListGen] = useState([]);
@@ -59,22 +60,41 @@ const Dashboard = () => {
         e.preventDefault();
         
         if (nombre !== '' || genero !== '' || plataforma !== '') {
-            const filteredGames = await axios.get('http://localhost:8000/juegos', {
+            try {
+                const filteredGames = await axios({
+                method: 'GET',
+                url: 'http://localhost:8000/juegos',
+                params:{
                 "nombre": nombre,
                 "genero": genero,
                 "plataforma": plataforma,
                 "asc": orden
-            });
-            setFilteredGames(filteredGames.data);
+                }
+                });
+                setFilteredGames(filteredGames.data);
+            }
+            catch (error) {
+                console.error(error);
+                //La idea es que si cayó un 404 no se muestre nada
+                setFilteredGames([]);
+            }
         } 
         else {
-            const filteredGames = await axios.get('http://localhost:8000/juegosAll');
-            setFilteredGames(filteredGames.data);
+            try {
+                const filteredGames = await axios.get('http://localhost:8000/juegosAll');
+                setFilteredGames(filteredGames.data);
+            }
+            catch (error) {
+                console.error(error);
+                //La idea es que si cayó un 404 no se muestre nada
+                setFilteredGames([]);
+            }
         }
     };
 
         return (
         <>
+        <New tipo={type}/>
         <form className="container-formulario" onSubmit={handleSubmit}>
             <div className="container-input">
                 <div id='filter-elecciones'>

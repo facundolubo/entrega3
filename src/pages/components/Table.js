@@ -18,18 +18,18 @@ function Table(props) {
 
     const deleteList = (id) => {
         const result = window.confirm(
-          "¿Estás que deceas Eliminar el id " + id + "?"
+            "¿Estás que deceas Eliminar el id " + id + "?"
         );
         if(result){
             axios
-              .delete(`http://localhost:8000/${type}/${id}`)
-              .then((response) => { //atento que no se esta usando la response
+                .delete(`http://localhost:8000/${type}/${id}`)
+                .then((response) => { //atento que no se esta usando la response
                 // Actualizar la lista de géneros después de eliminar uno
                 getList();
-              })
-              .catch((error) => {
+            })
+            .catch((error) => {
                 console.error("Error al eliminar el género:", error);
-              });
+            });
         }
         
     };
@@ -62,13 +62,14 @@ function Table(props) {
         });
 
         input.value = nombre;
+
         closeX.addEventListener("click", () => {
             body.style = "overflow-y:auto";
             moddle.classList.add("hidden");
         });
+
         moddle.classList.remove("hidden");
 
-        
         outed.addEventListener("click", () => {
             exit();
         });
@@ -152,10 +153,10 @@ function Table(props) {
                             id="editar"
                             onClick={() => editList(data.id, data.nombre)}
                         >
-                            editar
+                            Editar
                         </button>
                         <button id="eliminar" onClick={() => deleteList(data.id)}>
-                            eliminar
+                            Eliminar
                         </button>
                     </td>
                     </tr>
