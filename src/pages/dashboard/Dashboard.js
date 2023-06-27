@@ -1,110 +1,55 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import New from '../components/New';
+
 function Dashboard (props) {
     const type = props.type;
-//  const [lista, setLista] = useState([]);
-    const [nombre, setNombre] = useState('');
-    const [genero, setGenero] = useState('');
-    const [listGen, setListGen] = useState([]);
-    const [plataforma, setPlataforma] = useState('');
-    const [listPlat, setListPlat] = useState([]);
-    const [orden, setOrden] = useState(true);
-    const [filteredGames, setFilteredGames] = useState([]);
+    const [listGen, setGeneros] = useState([]);
+    const [listPlat, setPlataforma] = useState([]);
+    const [listJuegos, setJuegos] = useState([]);
     
-    const handleNameChange = (e) => {
-        setNombre(e.target.value);
+    const getJuegos = () => {
+      axios
+        .get("http://localhost:8000/juegos")
+        .then(function (response) {
+          setJuegos(response.data);
+        })
+        .catch((error) => console.error(error));
     };
-    
-    const handleGeneroChange = (e) => {
-        setGenero(e.target.value);
+    const getGenero = () => {
+      axios
+        .get("http://localhost:8000/generos")
+        .then(function (response) {
+          setGeneros(response.data);
+        })
+        .catch((error) => console.error(error));
     };
-    
-    const handlePlataformaChange = (e) => {
-        setPlataforma(e.target.value);
+    const getPlataforma = () => {
+      axios
+        .get("http://localhost:8000/plataformas")
+        .then(function (response) {
+          setPlataforma(response.data);
+        })
+        .catch((error) => console.error(error));
     };
-    
-    const handleOrdenChange = (e) => {
-        setOrden(e.target.value);
-    };
-    
+
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const generosResponse = await axios.get("http://localhost:8000/generos");
-                setListGen(generosResponse.data);
-            } catch (error) {
-                console.error(error);
-            }
-            try {
-                const plataformasResponse = await axios.get("http://localhost:8000/plataformas");
-                setListPlat(plataformasResponse.data);
-            } 
-            catch (error) {
-                console.error(error);
-            }
-            try {
-                const juegosResponse = await axios.get("http://localhost:8000/juegosAll");
-                setFilteredGames(juegosResponse.data);
-            }
-            catch (error) {
-                console.error(error);
-            }
-        };
-        
-        fetchData();
-    }, []);
-    
-    
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        
-        if (nombre !== '' || genero !== '' || plataforma !== '') {
-            try {
-                const filteredGames = await axios({
-                method: 'GET',
-                url: 'http://localhost:8000/juegos',
-                params:{
-                "nombre": nombre,
-                "genero": genero,
-                "plataforma": plataforma,
-                "asc": orden
-                }
-                });
-                setFilteredGames(filteredGames.data);
-            }
-            catch (error) {
-                console.error(error);
-                //La idea es que si cayó un 404 no se muestre nada
-                setFilteredGames([]);
-            }
-        } 
-        else {
-            try {
-                const filteredGames = await axios.get('http://localhost:8000/juegosAll');
-                setFilteredGames(filteredGames.data);
-            }
-            catch (error) {
-                console.error(error);
-                //La idea es que si cayó un 404 no se muestre nada
-                setFilteredGames([]);
-            }
-        }
-    };
+        getGenero();
+        getJuegos();
+        getPlataforma();
+    },[])
 
         return (
         <>
-        <New tipo={type}/>
-        <form className="container-formulario" onSubmit={handleSubmit}>
+        <form className="container-formulario" onSubmit=''>
             <div className="container-input">
                 <div id='filter-elecciones'>
                     <label>
                         Nombre
-                        <input name="name" type='text' value={nombre} onChange={handleNameChange} />
+                        <input name="name" type='text' value={nombre} onChange='' />
                     </label>
                     <label>
                         Genero
-                        <select name="genero" type="text" value={genero} onChange={handleGeneroChange}>
+                        <select name="genero" type="text" value={genero} onChange=''>
                             <option value="">All</option>
                             {listGen.map((genero) => (
                                 <option key={genero.id} value={genero.id}>{genero.nombre}</option>
@@ -122,7 +67,7 @@ function Dashboard (props) {
                     </label>
                     <label>
                         Orden
-                        <select name="az" type="text" value={orden} onChange={handleOrdenChange}>
+                        <select name="az" type="text" value={orden} onChange=''>
                             <option value={true}>Ascending</option>
                             <option value={false}>Descending</option>
                         </select>
