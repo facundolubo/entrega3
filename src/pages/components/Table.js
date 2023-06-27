@@ -123,7 +123,7 @@ function Table(props) {
         <main>
           <div className="container-list">
             <div>
-              <a>Agregar Genero</a>
+              <a>Agregar {props.type}</a>
             </div>
             <table id="tableModdle">
               <thead>

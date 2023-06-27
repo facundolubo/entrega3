@@ -108,7 +108,7 @@ function Dashboard () {
                   </label>
                   <label>
                     Orden
-                    <select id="az" name="az" type="text">
+                    <select id="az" name="az" type="text" onChange={handleFilter}>
                       <option value={true}>Ascending</option>
                       <option value={""}>Descending</option>
                     </select>
