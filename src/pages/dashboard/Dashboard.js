@@ -86,7 +86,7 @@ function Dashboard () {
                   </label>
                   <label>
                     Genero
-                    <select id="genero" name="genero" type="text">
+                    <select id="genero" name="genero" type="text" onChange={handleFilter}>
                       <option value="">All</option>
                       {listGen.map((genero) => (
                         <option key={genero.id} value={genero.id}>
@@ -97,7 +97,7 @@ function Dashboard () {
                   </label>
                   <label>
                     Plataforma
-                    <select id="plataforma" name="plataforma" type="text">
+                    <select id="plataforma" name="plataforma" type="text" onChange={handleFilter}>
                       <option value="">All</option>
                       {listPlat.map((plataforma) => (
                         <option key={plataforma.id} value={plataforma.id}>
