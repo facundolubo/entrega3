@@ -36,7 +36,23 @@ function Table(props) {
         }
         
     };
-
+    const edit = ()=>{
+      const moddle = document.querySelector(".moddle");
+      const input = document.querySelector("#nombre");
+      const id = document.getElementById("hiddenInput").value;
+      moddle.classList.add("hidden");
+      let nombre = {
+        nombre: input.value,
+      };
+      console.log(nombre);
+      axios
+        .put(`http://localhost:8000/${type}/${id}`, nombre)
+        .then(function (response) {
+          //!alerta del response
+          getList();
+        })
+        .catch((error) => console.error(error));
+    }
     const editList = (id, nombre) => {
         const moddle = document.querySelector(".moddle");
         const closeX = document.querySelector("i");
@@ -45,12 +61,14 @@ function Table(props) {
         const outed = document.querySelector("#out");
         const body = document.querySelector("body");
         const table = document.getElementById("tableModdle");
-
+        const hidenInput = document.getElementById('hiddenInput');
         body.style = 'overflow-y:hidden';
 
         table.scrollIntoView({ behavior: "smooth", block: "start" });
         
         outed.classList.remove("hidden");
+
+        hidenInput.value = id;
 
         const exit = ()=>{
             body.style = "overflow-y:auto";
@@ -65,30 +83,11 @@ function Table(props) {
         });
 
         input.value = nombre;
-        closeX.addEventListener("click", () => {
-            body.style = "overflow-y:auto";
-            moddle.classList.add("hidden");
-        });
+        closeX.addEventListener("click", () => exit());
         moddle.classList.remove("hidden");
-
+        save.addEventListener('click',()=>exit());
         
         outed.addEventListener("click",()=> exit());
-
-        save.addEventListener("click", () => {
-                moddle.classList.add("hidden");
-                let nombre = {
-                    nombre: input.value,
-                };
-                console.log(nombre);
-                axios
-                .put(`http://localhost:8000/${type}/${id}`, nombre)
-                .then(function (response) {
-                    //!alerta del response
-                    getList();
-                })
-                .catch((error) => console.error(error));
-                exit();
-        });
     };
 
     useEffect(() => {
@@ -107,10 +106,11 @@ function Table(props) {
               <h3>EDITAR</h3>
             </header>
             <main>
-              <form>
+              <form noValidate>
                 <label>nombre</label>
+                <input id="hiddenInput" type="hidden"></input>
                 <input id="nombre"></input>
-                <button id="save" type="button">
+                <button id="save" type="button" onClick={edit}>
                   save
                 </button>
               </form>

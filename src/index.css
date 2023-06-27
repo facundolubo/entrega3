@@ -223,8 +223,8 @@ h1 {
   text-transform: uppercase;
   z-index: 20;
   text-shadow: 0 2px 5px #ffffff;
-  opacity: 0;
-  transition: opacity 1s;
+  /* opacity: 0;
+  transition: opacity 1s; */
 }
 
 .juego:hover img {
