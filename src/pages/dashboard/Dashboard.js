@@ -135,9 +135,11 @@ function Dashboard (props) {
             <div key={data.id}>
                 <h3>{data.nombre}</h3>
                 {/* Tengo que acceder al nombre del genero y de plataforma x id */}
-                <h3>{data.id_genero}</h3>
-                <h3>{data.id_plataforma}</h3>
-                <h3>{data.imagen}</h3>
+                <h3>{listGen.find(genero => genero.id === data.id_genero).nombre}</h3>
+                <h3>{listPlat.find(plataforma => plataforma.id === data.id_plataforma).nombre}</h3>
+                <h3>{data.url}</h3>
+                <h3>{data.descripcion}</h3>
+                <h3>{data.tipo_imagen} </h3>
             </div>
         ))}
 
