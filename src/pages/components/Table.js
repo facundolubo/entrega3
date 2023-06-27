@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 
 import "./Table.css";
 
@@ -7,14 +7,14 @@ function Table(props) {
     const type = props.type;
 
     const [lista, setLista] = useState([]);
-    const getList = () => {
+    const getList = useCallback(() => {
         axios
         .get(`http://localhost:8000/${type}`)
         .then(function (response) {
             setLista(response.data);
         })
         .catch((error) => console.error(error));
-    };
+    } , [type]);
 
     const deleteList = (id) => {
         const result = window.confirm(
@@ -107,9 +107,7 @@ function Table(props) {
 
     useEffect(() => {
         getList();
-    }, []);
-
-    
+    }, [getList]);
 
     return (
         <div className="generoApp">
