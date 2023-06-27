@@ -1,3 +1,4 @@
+/* Lunes 26/06: Estoy trabajando sobre Dashboard2, no sobre este Dashboard */
 import axios from 'axios';
 import React, { useState, useEffect } from "react";
 import './Dashboard.css';
