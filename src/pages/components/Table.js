@@ -23,7 +23,7 @@ function Table(props) {
         if(result){
             axios
               .delete(`http://localhost:8000/${type}/${id}`)
-              .then((response) => {
+              .then((response) => { //atento que no se esta usando la response
                 // Actualizar la lista de géneros después de eliminar uno
                 getList();
               })

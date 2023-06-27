@@ -21,8 +21,8 @@ const Dashboard = () => {
         setPlataforma(e.target.value);
     };
 
-    const handleOrdenChange = () => {
-        setOrden((prevOrden) => !prevOrden);
+    const handleOrdenChange = (e) => {
+        setOrden(e.target.value);
     };
 
     useEffect(() => {
@@ -48,14 +48,12 @@ const Dashboard = () => {
         e.preventDefault();
         try {
             const response = await axios.get('http://localhost:8000/juegos', {
-                params: {
-                    nombre,
-                    genero,
-                    plataforma,
-                    orden,
-                }
+                "nombre": nombre,
+                "genero": genero,
+                "plataforma": plataforma
+                //orden: orden
             });
-
+            console.log(response.data);
             const filteredGames = response.data;
             // Do something with filteredGames
 
