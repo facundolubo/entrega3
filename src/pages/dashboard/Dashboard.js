@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
-function Dashboard (props) {
-    const type = props.type;
+import "./Dashboard.css";
+function Dashboard () {
     const [listGen, setGeneros] = useState([]);
     const [listPlat, setPlataforma] = useState([]);
     const [listJuegos, setJuegos] = useState([]);
-    
-    const getJuegos = () => {
+
+    const getJuegos = (params={}) => {
       axios
-        .get("http://localhost:8000/juegos")
+        .get("http://localhost:8000/juegos",{params})
         .then(function (response) {
-          setJuegos(response.data);
+            setJuegos(response.data);
         })
-        .catch((error) => console.error(error));
+        .catch((error) => {
+            console.error(error.response.data);
+            setJuegos([]);
+        });
     };
     const getGenero = () => {
       axios
@@ -31,63 +33,121 @@ function Dashboard (props) {
         })
         .catch((error) => console.error(error));
     };
+    const buscarGeneroPorId = (id) => {
+        return listGen.find((objeto) => objeto.id === id).nombre;
+    };
+    const buscarPlataformaPorId = (id) => {
+        return listPlat.find((objeto) => objeto.id === id).nombre;
+    };
+    const handleFilter = ()=>{
+        let select = document.querySelector("#genero");
+        let genero = select.value;
+        select = document.querySelector("#plataforma");
+        let plataforma = select.value;
+        select = document.querySelector("#az");
+        let asc = select.value;
+        select = document.querySelector("#name");
+        let nombre = select.value;
+        console.log(
+          genero +
+            "|Plataforma:" +
+            plataforma +
+            "|Asc: " +
+            asc +
+            "|Nombre: " +
+            nombre
+        );
+
+        getJuegos({genero,plataforma,asc,nombre});
+    }
 
     useEffect(() => {
-        getGenero();
-        getJuegos();
-        getPlataforma();
-    },[])
-
+      getGenero();
+      getPlataforma();
+      getJuegos();
+    }, []);
+    
+      const decode = (type, img) => {
+        return "data:image/" + type + ";base64," + img;
+      };
         return (
-        <>
-        <form className="container-formulario" onSubmit=''>
-            <div className="container-input">
-                <div id='filter-elecciones'>
-                    <label>
-                        Nombre
-                        <input name="name" type='text' value={nombre} onChange='' />
-                    </label>
-                    <label>
-                        Genero
-                        <select name="genero" type="text" value={genero} onChange=''>
-                            <option value="">All</option>
-                            {listGen.map((genero) => (
-                                <option key={genero.id} value={genero.id}>{genero.nombre}</option>
-                            ))}
-                        </select>
-                    </label>
-                    <label>
-                        Plataforma
-                        <select name="plataforma" type="text" value={plataforma} onChange={handlePlataformaChange}>
-                            <option value="">All</option>
-                            {listPlat.map((plataforma) => (
-                                <option key={plataforma.id} value={plataforma.id}>{plataforma.nombre}</option>
-                            ))}
-                        </select>
-                    </label>
-                    <label>
-                        Orden
-                        <select name="az" type="text" value={orden} onChange=''>
-                            <option value={true}>Ascending</option>
-                            <option value={false}>Descending</option>
-                        </select>
-                    </label>
-                    <button type="submit">Filter</button>
+          <>
+            <form className="container-formulario">
+              <div className="container-input">
+                <div id="filter-elecciones">
+                  <label>
+                    Nombre
+                    <input
+                      id="name"
+                      name="name"
+                      type="text"
+                      onChange={handleFilter}
+                    />
+                  </label>
+                  <label>
+                    Genero
+                    <select id="genero" name="genero" type="text">
+                      <option value="">All</option>
+                      {listGen.map((genero) => (
+                        <option key={genero.id} value={genero.id}>
+                          {genero.nombre}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <label>
+                    Plataforma
+                    <select id="plataforma" name="plataforma" type="text">
+                      <option value="">All</option>
+                      {listPlat.map((plataforma) => (
+                        <option key={plataforma.id} value={plataforma.id}>
+                          {plataforma.nombre}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <label>
+                    Orden
+                    <select id="az" name="az" type="text">
+                      <option value={true}>Ascending</option>
+                      <option value={""}>Descending</option>
+                    </select>
+                  </label>
+                  <button
+                    className="filterButton"
+                    onClick={handleFilter}
+                    type="button"
+                  >
+                    Filter
+                  </button>
                 </div>
-            </div>
-        </form>
-        {filteredGames.map((data) => (
-            <div key={data.id}>
-                <h3>{data.nombre}</h3>
-                {/* Tengo que acceder al nombre del genero y de plataforma x id */}
-                <h3>{data.id_genero}</h3>
-                <h3>{data.id_plataforma}</h3>
-                <h3>{data.imagen}</h3>
-            </div>
-        ))}
-
-        </>
-    );
+              </div>
+            </form>
+            {listJuegos.map((data) => (
+              <>
+                <section>
+                  <div className="juegos">
+                    <article>
+                      <a className="link" href={data.url} target="blank">
+                        <div className="titles">
+                          <h2 className="title">{data.nombre}</h2>
+                          <h3 className="title">
+                            {buscarGeneroPorId(data.id_genero)}
+                          </h3>
+                          <h4 className="title">
+                            {buscarPlataformaPorId(data.id_plataforma)}
+                          </h4>
+                        </div>
+                        <img src={decode(data.tipo_imagen, data.imagen)}></img>
+                      </a>
+                      <p className="desc-juego">{data.descripcion}</p>
+                    </article>
+                  </div>
+                </section>
+              </>
+            ))}
+          </>
+        );
 };
 
 export default Dashboard;

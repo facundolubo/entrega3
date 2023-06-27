@@ -6,3 +6,9 @@
     height: 100%;
     color: white;
 }
+.container-formulario{
+    margin-bottom: 20vh;
+}
+.filterButton{
+    cursor: pointer;
+}
