@@ -1,0 +1,132 @@
+p {
+    color: #fff;
+}
+
+option {
+    color: #0c0c0c;
+}
+  .juego:hover img {
+    filter: blur(2px);
+  }
+  
+  .juego:hover .title {
+    opacity: 1;
+    transition: opacity 0.5s;
+  }
+  
+  .desc-juego {
+    height: 30vh;
+    max-width: 21vw;
+    max-height: 15vh;
+    overflow-y: auto;
+    transition: all 1s;
+    word-wrap: break-word; /* Para que el texto no rebase el borde */
+  }
+  
+  .link {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .add-juego {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .add-juego h1 {
+    margin-bottom: 20px;
+  }
+  
+  .input-juego {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    border: none;
+  }
+  
+  
+.input-juego input,
+  textarea {
+    all: unset;
+    overflow-wrap: break-word;
+    border: 1px solid rgba(255, 255, 255);
+    color: #fff;
+    padding-left: 9px;
+  
+  }
+  
+.input-juego #imagen {
+    color: #fff;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+  }
+  
+.input-juego label {
+    text-transform: uppercase;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px rgba(51, 236, 206, 0.9);
+    color: var(--BW);
+  }
+
+  input[type="file" i] {
+    text-shadow: 0 0 10px rgba(51, 236, 206, 0.9);
+    color: var(--BW);
+  }
+  
+  .desc-area {
+    width: 98%;
+    resize: none;
+  }
+  
+  .lenght {
+    text-shadow: 0 0 10px rgba(103, 236, 51, 0.9);
+    color: rgb(103, 236, 51);
+    transition: text-shadow 0.5s;
+    margin-top: 10px;
+  }
+  
+  .formulario-crear {
+    border: 1px solid white;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .boton-sub {
+    height: 50px;
+    cursor: pointer;
+    color: white;
+    background-color: var(--BG);
+    border-color: var(--BW);
+    transition: all 1s;
+  }
+  
+  #imagen {
+    cursor: pointer;
+  }
+  
+  .boton-sub:hover {
+    background: rgba(51, 236, 205, 0.128);
+    transition: all 1s;
+    box-shadow: 0 0 10px rgba(51, 236, 205, 0.581);
+  }
+  
+  .alert{
+    width: 100%;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fa3535;
+    border: #252525 solid 1px;
+    box-shadow: 0 0 10px #fa3535e6;
+    margin-bottom: 10px;
+    color: white;
+  }
+  

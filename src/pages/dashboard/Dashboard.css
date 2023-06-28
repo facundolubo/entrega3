@@ -10,5 +10,17 @@
     margin-bottom: 20vh;
 }
 .filterButton{
+    right: 30vw;
+    top: 24vh;
     cursor: pointer;
+    margin-left: 1vw;
+    font-size: 1em;
+    color: rgb(11, 86, 99);
 }
+
+.lens-button::before {
+    content: "\f002"; /* Unicode character for the lens icon in Font Awesome */
+    font-family: "Font Awesome"; /* Ensure Font Awesome is the selected font family */
+    display: inline-block;
+    margin-right: 5px; /* Optional: Add some space between the icon and text */
+}  

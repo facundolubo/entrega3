@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "./Dashboard.css";
+import NewJuego from "../components/NewJuego";
+
 function Dashboard () {
     const [listGen, setGeneros] = useState([]);
     const [listPlat, setPlataforma] = useState([]);
@@ -109,16 +111,16 @@ function Dashboard () {
                   <label>
                     Orden
                     <select id="az" name="az" type="text" onChange={handleFilter}>
-                      <option value={true}>Ascending</option>
-                      <option value={""}>Descending</option>
+                      <option value={true}>Ascendente</option>
+                      <option value={""}>Descendente</option>
                     </select>
                   </label>
                   <button
-                    className="filterButton"
+                    className="bi bi-search"
                     onClick={handleFilter}
                     type="button"
                   >
-                    Filter
+                    Filtrar
                   </button>
                 </div>
               </div>
@@ -146,6 +148,7 @@ function Dashboard () {
                 </section>
               </>
             ))}
+          <NewJuego generos={listGen} plataformas={listPlat}/>
           </>
         );
 };
