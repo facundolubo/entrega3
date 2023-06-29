@@ -7,7 +7,11 @@ function Dashboard () {
     const [listGen, setGeneros] = useState([]);
     const [listPlat, setPlataforma] = useState([]);
     const [listJuegos, setJuegos] = useState([]);
+    const [showFilter, setShowFilter] = useState(true); 
 
+    const toggleForm = () => {
+      setShowFilter(!showFilter);
+    };
     const getJuegos = (params={}) => {
       axios
         .get("http://localhost:8000/juegos",{params})
@@ -68,13 +72,28 @@ function Dashboard () {
       getPlataforma();
       getJuegos();
     }, []);
-    
-      const decode = (type, img) => {
-        return "data:image/" + type + ";base64," + img;
-      };
-        return (
-          <>
-            <form className="container-formulario">
+  
+    const decode = (type, img) => {
+      return "data:image/" + type + ";base64," + img;
+    };
+
+  return (
+      <>
+      <nav className="navigation">
+        <a 
+        onClick={toggleForm} 
+        className={showFilter ? "active" : ""}>
+          Menu de Juegos
+        </a>
+        <a 
+        onClick={toggleForm}
+        className={!showFilter ? "active" : ""}
+        >
+        Agregar un Juego
+        </a>
+      </nav>
+      {showFilter ? (
+        <form className="container-formulario">
               <div className="container-input">
                 <div id="filter-elecciones">
                   <label>
@@ -124,9 +143,7 @@ function Dashboard () {
                   </button>
                 </div>
               </div>
-            </form>
             {listJuegos.map((data) => (
-              <>
                 <section>
                   <div className="juegos">
                     <article>
@@ -146,11 +163,11 @@ function Dashboard () {
                     </article>
                   </div>
                 </section>
-              </>
-            ))}
-          <NewJuego generos={listGen} plataformas={listPlat}/>
-          </>
-        );
-};
+              ))}
+        </form>
+      ) : (<NewJuego generos={listGen} plataformas={listPlat} />)}
+      </>
+  );
+}
 
 export default Dashboard;

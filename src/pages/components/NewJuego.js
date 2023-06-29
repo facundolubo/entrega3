@@ -91,9 +91,10 @@ function NewJuego({generos, plataformas}) {
 
     try {
       await axios.post('http://localhost:8000/juegos', newGame);
-      // Game successfully added to the database
-      console.log('Game added:', newGame);
-      // Reset form fields
+      window.alert('Juego agregado');
+      window.location.reload();
+      
+      // Resetear campos
       setNombre('');
       setGenero('');
       setPlataforma('');
@@ -200,8 +201,13 @@ return (
             id="imagen"
             name="imagen"
             value={imagen}
-            onChange={(e) => setImagen(e.target.value)}
+            onChange={(e) => {
+              setImagen(e.target.value)
+              setTipo_imagen(e.target.files[0].type.split('/')[1])
+            }}
+            accept="image/png, image/jpeg"
             required
+            
           />
           <p className="warnings" id="warning2" style={{ display: 'none', color: 'red' }}>
             Ingrese una imagen en formato PNG o JPG

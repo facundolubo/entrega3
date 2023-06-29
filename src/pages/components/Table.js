@@ -5,8 +5,6 @@ import axios from "axios";
 
 function Table(props) {
     const { type } = props;
-    const [generos, setGenero] = useState([]);
-    const [plataformas, setPlataforma] = useState([]);
     const [lista, setLista] = useState([]);
     const getList = async() => {
         await axios
@@ -37,7 +35,7 @@ function Table(props) {
         }
         
     };
-    const edit = ()=>{
+    const edit = () => {
       const moddle = document.querySelector(".moddle");
       const input = document.querySelector("#nombre");
       const id = document.getElementById("hiddenInput").value;
@@ -99,7 +97,7 @@ function Table(props) {
       const outed = document.querySelector("#out");
       const body = document.querySelector("body");
       const table = document.getElementById("tableModdle");
-      const hidenInput = document.getElementById('hiddenInput');
+      
       body.style = 'overflow-y:hidden';
       table.scrollIntoView({ behavior: "smooth", block: "start" });
       outed.classList.remove("hidden");
