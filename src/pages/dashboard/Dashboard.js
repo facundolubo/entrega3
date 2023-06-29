@@ -80,17 +80,17 @@ function Dashboard () {
   return (
       <>
       <nav className="navigation">
-        <a 
+        <button 
         onClick={toggleForm} 
         className={showFilter ? "active" : ""}>
           Menu de Juegos
-        </a>
-        <a 
+        </button>
+        <button
         onClick={toggleForm}
         className={!showFilter ? "active" : ""}
         >
         Agregar un Juego
-        </a>
+        </button>
       </nav>
       {showFilter ? (
         <form className="container-formulario">
