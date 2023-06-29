@@ -91,7 +91,7 @@ function Table(props) {
         outed.addEventListener("click",()=> exit());
     };
 
-    const handleAdd = (id, nombre) => {
+    const handleAdd = (type) => {
       const moddle = document.querySelector(".moddle");
       const closeX = document.querySelector("i");
       const input = document.querySelector("#nombre");
@@ -103,34 +103,36 @@ function Table(props) {
       body.style = 'overflow-y:hidden';
       table.scrollIntoView({ behavior: "smooth", block: "start" });
       outed.classList.remove("hidden");
-      hidenInput.value = id;
       
-
       const exit = () => {
           body.style = "overflow-y:auto";
           outed.classList.add("hidden");
           moddle.classList.add("hidden");
       }
+      
 
       document.addEventListener("keydown", function (event) {
         if (event.key === "Escape") {
           exit();
         }
       });
-      input.value = nombre;
+      
       closeX.addEventListener("click", () => exit());
+      save.addEventListener('click',() => {
+        const nombre = input.value;
+        exit()
+        axios
+        .post(`http://localhost:8000/${type}`, {'nombre': nombre})
+          .then(function (response) {
+            //!alerta del response
+            console.log(response.data);
+            getList();
+          })
+          .catch((error) => console.error(error));
+      });
+
       moddle.classList.remove("hidden");
-      save.addEventListener('click',()=>exit());
-
-      axios
-        .post(`http://localhost:8000/${type}`, nombre)
-        .then(function (response) {
-          //!alerta del response
-          getList();
-        })
-        .catch((error) => console.error(error));
     };
-
 
     useEffect(() => {
         getList();
@@ -165,7 +167,7 @@ function Table(props) {
         <main>
           <div className="container-list">
             <div>
-            <a onClick={handleAdd}>Agregar {type}</a>         
+            <a onClick={() => handleAdd(type)}>Agregar {type}</a>
           </div>
             <table id="tableModdle">
               <thead>
