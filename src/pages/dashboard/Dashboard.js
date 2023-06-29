@@ -144,10 +144,13 @@ function Dashboard () {
                 </div>
               </div>
             {listJuegos.map((data) => (
-                <section>
+                <section className="juegos-container">
                   <div className="juegos">
-                    <article>
-                      <a className="link" href={data.url} target="blank">
+                    <article className="juego">
+                      <a className="link" 
+                      href={`https://${data.url}`} // para escapar de la pagina
+                      target="_blank"
+                      rel="noreferrer">
                         <div className="titles">
                           <h2 className="title">{data.nombre}</h2>
                           <h3 className="title">
