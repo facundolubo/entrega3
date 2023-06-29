@@ -120,7 +120,7 @@ return (
             onChange={(e) => setNombre(e.target.value)}
             required
           />
-          <p className="warnings" id="warning1" style={{ display: 'none', color: 'red' }}>
+          <p className="warnings" id="warning1" style={{ display: nombre === "" ? 'block' : 'none' , color: 'red' }}>
             Debe ingresar un nombre
           </p>
         </div>
@@ -224,8 +224,8 @@ return (
             </span>
             /88
           </p>
-          <p className="warnings" id="warning-url" style={{ display: 'none', color: 'red' }}>
-            La URL no puede exceder los 88 caracteres.
+          <p className="warnings" id="warning-url" style={{ display: url.length > 88 ? 'block' : 'none', color: 'red' }}>
+            {url.length > 88 && "La URL no puede exceder los 88 caracteres."}
           </p>
         </div>
 

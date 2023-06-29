@@ -5,7 +5,8 @@ import axios from "axios";
 
 function Table(props) {
     const { type } = props;
-
+    const [generos, setGenero] = useState([]);
+    const [plataformas, setPlataforma] = useState([]);
     const [lista, setLista] = useState([]);
     const getList = async() => {
         await axios
@@ -90,6 +91,47 @@ function Table(props) {
         outed.addEventListener("click",()=> exit());
     };
 
+    const handleAdd = (id, nombre) => {
+      const moddle = document.querySelector(".moddle");
+      const closeX = document.querySelector("i");
+      const input = document.querySelector("#nombre");
+      const save = document.querySelector("#save");
+      const outed = document.querySelector("#out");
+      const body = document.querySelector("body");
+      const table = document.getElementById("tableModdle");
+      const hidenInput = document.getElementById('hiddenInput');
+      body.style = 'overflow-y:hidden';
+      table.scrollIntoView({ behavior: "smooth", block: "start" });
+      outed.classList.remove("hidden");
+      hidenInput.value = id;
+      
+
+      const exit = () => {
+          body.style = "overflow-y:auto";
+          outed.classList.add("hidden");
+          moddle.classList.add("hidden");
+      }
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+          exit();
+        }
+      });
+      input.value = nombre;
+      closeX.addEventListener("click", () => exit());
+      moddle.classList.remove("hidden");
+      save.addEventListener('click',()=>exit());
+
+      axios
+        .post(`http://localhost:8000/${type}`, nombre)
+        .then(function (response) {
+          //!alerta del response
+          getList();
+        })
+        .catch((error) => console.error(error));
+    };
+
+
     useEffect(() => {
         getList();
     }, []);
@@ -123,8 +165,8 @@ function Table(props) {
         <main>
           <div className="container-list">
             <div>
-              <a>Agregar {props.type}</a>
-            </div>
+            <a onClick={handleAdd}>Agregar {type}</a>         
+          </div>
             <table id="tableModdle">
               <thead>
                 <tr>
