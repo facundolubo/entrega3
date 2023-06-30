@@ -6,6 +6,7 @@ import axios from "axios";
 function Table(props) {
     const { type } = props;
     const [lista, setLista] = useState([]);
+    const [action,setAction] = useState("");
     const getList = async() => {
         await axios
         .get(`http://localhost:8000/${type}`)
@@ -61,10 +62,11 @@ function Table(props) {
         const body = document.querySelector("body");
         const table = document.getElementById("tableModdle");
         const hidenInput = document.getElementById('hiddenInput');
+        setAction("editar");
         body.style = 'overflow-y:hidden';
+        const titleModdle = document.getElementById("titleModdle");
+        titleModdle.innerText = 'EDITAR';
 
-        table.scrollIntoView({ behavior: "smooth", block: "start" });
-        
         outed.classList.remove("hidden");
 
         hidenInput.value = id;
@@ -73,64 +75,93 @@ function Table(props) {
             body.style = "overflow-y:auto";
             outed.classList.add("hidden");
             moddle.classList.add("hidden");
-        }
-
-        document.addEventListener("keydown", function (event) {
-          if (event.key === "Escape") {
-            exit();
           }
-        });
-
-        input.value = nombre;
-        closeX.addEventListener("click", () => exit());
-        moddle.classList.remove("hidden");
+          
+          document.addEventListener("keydown", function (event) {
+            if (event.key === "Escape") {
+              exit();
+            }
+          });
+          
+          input.value = nombre;
+          closeX.addEventListener("click", () => exit());
+          moddle.classList.remove("hidden");
+          moddle.scrollIntoView({ behavior: "smooth", block: "start" });
         save.addEventListener('click',()=>exit());
         
         outed.addEventListener("click",()=> exit());
-    };
+      };
+      
 
-    const handleAdd = (type) => {
-      const moddle = document.querySelector(".moddle");
-      const closeX = document.querySelector("i");
+    const handleAddSubmit = ()=>{
+      const exit = () => {
+        const moddle = document.querySelector(".moddle");
+        const outed = document.querySelector("#out");
+        const body = document.querySelector("body");
+        body.style = "overflow-y:auto";
+        outed.classList.add("hidden");
+        moddle.classList.add("hidden");
+      };
       const input = document.querySelector("#nombre");
-      const save = document.querySelector("#save");
+      const nombre = input.value;
+      exit();
+      axios
+        .post(`http://localhost:8000/${type}`, { nombre: nombre })
+        .then(function (response) {
+          //!alerta del response
+          console.log(response.data);
+          getList();
+        })
+        .catch((error) => console.error(error));
+      }
+      const handleAdd = (type) => {
+        const moddle = document.querySelector(".moddle");
+        const closeX = document.querySelector("i");
+        const input = document.querySelector("#nombre");
+        const save = document.querySelector("#save");
       const outed = document.querySelector("#out");
       const body = document.querySelector("body");
       const table = document.getElementById("tableModdle");
-      
+      const titleModdle = document.getElementById("titleModdle");
+      titleModdle.innerText = "AGREGAR";
+      setAction('agregar');
+      input.value = '';
       body.style = 'overflow-y:hidden';
       table.scrollIntoView({ behavior: "smooth", block: "start" });
       outed.classList.remove("hidden");
       
       const exit = () => {
-          body.style = "overflow-y:auto";
+        body.style = "overflow-y:auto";
           outed.classList.add("hidden");
           moddle.classList.add("hidden");
-      }
-      
+        }
+        
 
       document.addEventListener("keydown", function (event) {
         if (event.key === "Escape") {
           exit();
         }
+        
       });
       
+      outed.addEventListener("click",()=> exit());
       closeX.addEventListener("click", () => exit());
       save.addEventListener('click',() => {
-        const nombre = input.value;
-        exit()
-        axios
-        .post(`http://localhost:8000/${type}`, {'nombre': nombre})
-          .then(function (response) {
-            //!alerta del response
-            console.log(response.data);
-            getList();
-          })
-          .catch((error) => console.error(error));
+       exit()
       });
 
       moddle.classList.remove("hidden");
+      moddle.scrollIntoView({ behavior: "smooth", block: "start" });
     };
+
+    const handleSubmit = ()=>{ 
+      console.log(action);
+        if ((action == "editar")) {
+          edit();
+        } else {
+          handleAddSubmit();
+        }
+    }
 
     useEffect(() => {
         getList();
@@ -145,14 +176,14 @@ function Table(props) {
           <div className="moddle-element">
             <i>x</i>
             <header>
-              <h3>EDITAR</h3>
+              <h3 id="titleModdle"></h3>
             </header>
             <main>
               <form noValidate>
                 <label>nombre</label>
                 <input id="hiddenInput" type="hidden"></input>
                 <input id="nombre"></input>
-                <button id="save" type="button" onClick={edit}>
+                <button id="save" type="button" onClick={()=>{handleSubmit()}}>
                   save
                 </button>
               </form>
@@ -165,8 +196,8 @@ function Table(props) {
         <main>
           <div className="container-list">
             <div>
-            <a onClick={() => handleAdd(type)}>Agregar {type}</a>
-          </div>
+              <a onClick={() => handleAdd(type)}>Agregar {type}</a>
+            </div>
             <table id="tableModdle">
               <thead>
                 <tr>
