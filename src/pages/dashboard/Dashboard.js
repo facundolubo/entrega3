@@ -143,9 +143,9 @@ function Dashboard () {
                   </button>
                 </div>
               </div>
+              <section className="juegos-container">
+                <div className="juegos">
             {listJuegos.map((data) => (
-                <section className="juegos-container">
-                  <div className="juegos">
                     <article className="juego">
                       <a className="link" 
                       href={`https://${data.url}`} // para escapar de la pagina
@@ -164,9 +164,9 @@ function Dashboard () {
                       </a>
                       <p className="desc-juego">{data.descripcion}</p>
                     </article>
-                  </div>
-                </section>
               ))}
+              </div>
+              </section>
         </form>
       ) : (<NewJuego generos={listGen} plataformas={listPlat} />)}
       </>
