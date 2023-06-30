@@ -4,5 +4,5 @@ creado con create-react-app
 ► Axios
     
     npm install axios
-## Authores
+## Autores
 Manuel Coria - Facundo Lubo
