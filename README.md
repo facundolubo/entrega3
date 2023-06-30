@@ -1,2 +1,3 @@
 # Dependencias Extras
-    ► Axios
+► Axios
+    npm install axios
