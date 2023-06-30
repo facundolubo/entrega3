@@ -130,5 +130,6 @@ border-bottom: 2px solid #333333;
     max-height: 15vh;
     overflow-y: auto;
     transition: all 1s;
+    color:#121212;
     word-wrap: break-word; /* Para que el texto no rebase el borde */
 }
