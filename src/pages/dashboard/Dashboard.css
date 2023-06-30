@@ -128,3 +128,6 @@ border-bottom: 2px solid #333333;
     color:#121212;
     word-wrap: break-word; /* Para que el texto no rebase el borde */
 }
+#tableModdle{
+    padding: 20px;
+}
