@@ -134,13 +134,13 @@ function Dashboard () {
                       <option value={""}>Descendente</option>
                     </select>
                   </label>
-                  <button
+{/*                   <button
                     className="bi bi-search"
                     onClick={handleFilter}
                     type="button"
                   >
                     Filtrar
-                  </button>
+                  </button> */}
                 </div>
               </div>
               <section className="juegos-container">
