@@ -134,18 +134,18 @@ function Dashboard () {
                       <option value={""}>Descendente</option>
                     </select>
                   </label>
-                  <button
+{/*                   <button
                     className="bi bi-search"
                     onClick={handleFilter}
                     type="button"
                   >
                     Filtrar
-                  </button>
+                  </button> */}
                 </div>
               </div>
+              <section className="juegos-container">
+                <div className="juegos">
             {listJuegos.map((data) => (
-                <section className="juegos-container">
-                  <div className="juegos">
                     <article className="juego">
                       <a className="link" 
                       href={`https://${data.url}`} // para escapar de la pagina
@@ -164,9 +164,9 @@ function Dashboard () {
                       </a>
                       <p className="desc-juego">{data.descripcion}</p>
                     </article>
-                  </div>
-                </section>
               ))}
+              </div>
+              </section>
         </form>
       ) : (<NewJuego generos={listGen} plataformas={listPlat} />)}
       </>
