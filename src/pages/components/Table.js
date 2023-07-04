@@ -39,7 +39,8 @@ function Table(props) {
     }
   };
 
-  const edit = () => {
+  const edit = (e) => {
+    e.preventDefault();
     if (inputValue.trim() === "") {
       alert("El nombre no puede estar vacio");
       return;
@@ -92,13 +93,12 @@ function Table(props) {
     setInputValue("");
     setModdleHidden(false);
   };
-  const handleSubmit = ()=>{ 
-    console.log(action);
+  const handleSubmit = (e) => { 
       if ((action === "editar")) {
-        edit();
+        edit(e);
       } 
       else {
-        handleAddSubmit();
+        handleAddSubmit(e);
       }
   }
   useEffect(() => {
@@ -142,7 +142,7 @@ function Table(props) {
               <tr>
                 <th>Id</th>
                 <th>Nombre</th>
-                <th>accion</th>
+                <th>Accion</th>
               </tr>
             </thead>
             <tbody>
