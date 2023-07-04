@@ -46,6 +46,7 @@ function Dashboard () {
         return listPlat.find((objeto) => objeto.id === id).nombre;
     };
     const handleFilter = ()=>{
+      /*definir objeto con 4 campos*/
         let select = document.querySelector("#genero");
         let genero = select.value;
         select = document.querySelector("#plataforma");
@@ -63,7 +64,6 @@ function Dashboard () {
             "|Nombre: " +
             nombre
         );
-
         getJuegos({genero,plataforma,asc,nombre});
     }
 

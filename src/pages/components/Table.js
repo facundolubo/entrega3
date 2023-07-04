@@ -20,9 +20,9 @@ function Table(props) {
       .catch((error) => console.error(error));
   };
 
-  const deleteList = (id) => {
+  const deleteList = (id, nombre) => {
     const result = window.confirm(
-      "¿Estás seguro que deseas eliminar el id " + id + "?"
+      "¿Estás seguro que deseas eliminar " + nombre + "?"
     );
     if (result) {
       const deletes = async () => {
@@ -30,9 +30,10 @@ function Table(props) {
           .delete(`http://localhost:8000/${type}/${id}`)
           .then((response) => {
             getList();
+            alert(response.data);
           })
           .catch((error) => {
-            console.error("Error al eliminar el género:", error);
+              alert(error.response.data);
           });
       };
       deletes();
@@ -52,9 +53,9 @@ function Table(props) {
       .put(`http://localhost:8000/${type}/${hiddenInput}`, nombre)
       .then(function (response) {
         getList();
+        alert(response.data);
       })
       .catch((error) => console.error(error));
-
     handleCloseModdle();
   };
 
@@ -82,9 +83,9 @@ function Table(props) {
       .post(`http://localhost:8000/${type}`, { nombre: inputValue })
       .then(function (response) {
         getList();
+        alert(response.data);
       })
       .catch((error) => console.error(error));
-
     handleCloseModdle();
   };
 
@@ -159,7 +160,7 @@ function Table(props) {
                     </button>
                     <button
                       id="eliminar"
-                      onClick={() => deleteList(data.id)}
+                      onClick={() => deleteList(data.id, data.nombre)}
                     >
                       eliminar
                     </button>

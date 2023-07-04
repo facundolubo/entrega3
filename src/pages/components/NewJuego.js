@@ -90,10 +90,11 @@ function NewJuego({generos, plataformas}) {
     };
 
     try {
-      await axios.post('http://localhost:8000/juegos', newGame);
-      window.alert('Juego agregado');
-      window.location.reload();
-      
+      await axios.post('http://localhost:8000/juegos', newGame)
+        .then((response) => {
+          window.alert(response.data);
+          window.location.reload();
+        });      
       // Resetear campos
       setNombre('');
       setGenero('');
@@ -102,7 +103,7 @@ function NewJuego({generos, plataformas}) {
       setImagen('');
       setUrl('');
     } catch (error) {
-      console.error(error);
+      window.alert(error.response.data);
     }
   };
 
