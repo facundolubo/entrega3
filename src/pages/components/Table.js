@@ -4,232 +4,174 @@ import "./Table.css";
 import axios from "axios";
 
 function Table(props) {
-    const { type } = props;
-    const [lista, setLista] = useState([]);
-    const [action,setAction] = useState("");
-    const getList = async() => {
-        await axios
-        .get(`http://localhost:8000/${type}`)
-        .then(function (response) {
-            setLista(response.data);
-        })
-        .catch((error) => console.error(error));
-    };
+  const { type } = props;
+  const [lista, setLista] = useState([]);
+  const [action, setAction] = useState("");
+  const [hiddenInput, setHiddenInput] = useState("");
+  const [moddleHidden, setModdleHidden] = useState(true);
+  const [inputValue, setInputValue] = useState("");
 
-    const deleteList = (id) => {
-        const result = window.confirm(
-          "¿Estás que deceas Eliminar el id " + id + "?"
-        );  
-        if(result){
-            const deletes = async ()=>{
-                await axios
-                .delete(`http://localhost:8000/${type}/${id}`)
-                .then((response) => {
-                    // Actualizar la lista de géneros después de eliminar uno
-                    getList();
-                })
-                .catch((error) => {
-                    console.error("Error al eliminar el género:", error);
-                });
-            }
-            deletes();
-        }
-        
-    };
-    const edit = () => {
-      const moddle = document.querySelector(".moddle");
-      const input = document.querySelector("#nombre");
-      const id = document.getElementById("hiddenInput").value;
-      moddle.classList.add("hidden");
-      let nombre = {
-        nombre: input.value,
-      };
-      console.log(nombre);
-      axios
-        .put(`http://localhost:8000/${type}/${id}`, nombre)
-        .then(function (response) {
-          //!alerta del response
-          getList();
-        })
-        .catch((error) => console.error(error));
-    }
-    const editList = (id, nombre) => {
-        const moddle = document.querySelector(".moddle");
-        const closeX = document.querySelector("i");
-        const input = document.querySelector("#nombre");
-        const save = document.querySelector("#save");
-        const outed = document.querySelector("#out");
-        const body = document.querySelector("body");
-        const table = document.getElementById("tableModdle");
-        const hidenInput = document.getElementById('hiddenInput');
-        setAction("editar");
-        body.style = 'overflow-y:hidden';
-        const titleModdle = document.getElementById("titleModdle");
-        titleModdle.innerText = 'EDITAR';
+  const getList = async () => {
+    await axios
+      .get(`http://localhost:8000/${type}`)
+      .then(function (response) {
+        setLista(response.data);
+      })
+      .catch((error) => console.error(error));
+  };
 
-        outed.classList.remove("hidden");
-
-        hidenInput.value = id;
-
-        const exit = ()=>{
-            body.style = "overflow-y:auto";
-            outed.classList.add("hidden");
-            moddle.classList.add("hidden");
-          }
-          
-          document.addEventListener("keydown", function (event) {
-            if (event.key === "Escape") {
-              exit();
-            }
-          });
-          
-          input.value = nombre;
-          closeX.addEventListener("click", () => exit());
-          moddle.classList.remove("hidden");
-          moddle.scrollIntoView({ behavior: "smooth", block: "start" });
-        save.addEventListener('click',()=>exit());
-        
-        outed.addEventListener("click",()=> exit());
-      };
-      
-
-    const handleAddSubmit = ()=>{
-      const exit = () => {
-        const moddle = document.querySelector(".moddle");
-        const outed = document.querySelector("#out");
-        const body = document.querySelector("body");
-        body.style = "overflow-y:auto";
-        outed.classList.add("hidden");
-        moddle.classList.add("hidden");
-      };
-      const input = document.querySelector("#nombre");
-      const nombre = input.value;
-      exit();
-      axios
-        .post(`http://localhost:8000/${type}`, { nombre: nombre })
-        .then(function (response) {
-          //!alerta del response
-          console.log(response.data);
-          getList();
-        })
-        .catch((error) => console.error(error));
-      }
-      const handleAdd = (type) => {
-        const moddle = document.querySelector(".moddle");
-        const closeX = document.querySelector("i");
-        const input = document.querySelector("#nombre");
-        const save = document.querySelector("#save");
-      const outed = document.querySelector("#out");
-      const body = document.querySelector("body");
-      const table = document.getElementById("tableModdle");
-      const titleModdle = document.getElementById("titleModdle");
-      titleModdle.innerText = "AGREGAR";
-      setAction('agregar');
-      input.value = '';
-      body.style = 'overflow-y:hidden';
-      table.scrollIntoView({ behavior: "smooth", block: "start" });
-      outed.classList.remove("hidden");
-      
-      const exit = () => {
-        body.style = "overflow-y:auto";
-          outed.classList.add("hidden");
-          moddle.classList.add("hidden");
-        }
-        
-
-      document.addEventListener("keydown", function (event) {
-        if (event.key === "Escape") {
-          exit();
-        }
-        
-      });
-      
-      outed.addEventListener("click",()=> exit());
-      closeX.addEventListener("click", () => exit());
-      save.addEventListener('click',() => {
-       exit()
-      });
-
-      moddle.classList.remove("hidden");
-      moddle.scrollIntoView({ behavior: "smooth", block: "start" });
-    };
-
-    const handleSubmit = ()=>{ 
-      console.log(action);
-        if ((action == "editar")) {
-          edit();
-        } else {
-          handleAddSubmit();
-        }
-    }
-
-    useEffect(() => {
-        getList();
-    }, []);
-
-    
-
-    return (
-      <div className="generoApp">
-        <div className="moddle hidden">
-          <div className="out" id="out"></div>
-          <div className="moddle-element">
-            <i>x</i>
-            <header>
-              <h3 id="titleModdle"></h3>
-            </header>
-            <main>
-              <form noValidate>
-                <label>nombre</label>
-                <input id="hiddenInput" type="hidden"></input>
-                <input id="nombre"></input>
-                <button id="save" type="button" onClick={()=>{handleSubmit()}}>
-                  save
-                </button>
-              </form>
-            </main>
-          </div>
-        </div>
-        <header className="TitleHeader">
-          <h2>Lista {props.type}</h2>
-        </header>
-        <main>
-          <div className="container-list">
-            <div>
-              <a onClick={() => handleAdd(type)}>Agregar {type}</a>
-            </div>
-            <table id="tableModdle">
-              <thead>
-                <tr>
-                  <th>Id</th>
-                  <th>Nombre</th>
-                  <th>accion</th>
-                </tr>
-              </thead>
-              <tbody>
-                {lista.map((data, index) => (
-                  <tr key={index}>
-                    <td>{data.id}</td>
-                    <td>{data.nombre}</td>
-                    <td>
-                      <button
-                        id="editar"
-                        onClick={() => editList(data.id, data.nombre)}
-                      >
-                        editar
-                      </button>
-                      <button id="eliminar" onClick={() => deleteList(data.id)}>
-                        eliminar
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </main>
-      </div>
+  const deleteList = (id) => {
+    const result = window.confirm(
+      "¿Estás seguro que deseas eliminar el id " + id + "?"
     );
+    if (result) {
+      const deletes = async () => {
+        await axios
+          .delete(`http://localhost:8000/${type}/${id}`)
+          .then((response) => {
+            getList();
+          })
+          .catch((error) => {
+            console.error("Error al eliminar el género:", error);
+          });
+      };
+      deletes();
+    }
+  };
+
+  const edit = () => {
+    if (inputValue.trim() === "") {
+      alert("El nombre no puede estar vacio");
+      return;
+    }
+    const nombre = {
+      nombre: inputValue,
+    };
+    axios
+      .put(`http://localhost:8000/${type}/${hiddenInput}`, nombre)
+      .then(function (response) {
+        getList();
+      })
+      .catch((error) => console.error(error));
+
+    handleCloseModdle();
+  };
+
+  const editList = (id, nombre) => {
+    setHiddenInput(id);
+    setAction("editar");
+    setInputValue(nombre);
+    setModdleHidden(false);
+  };
+
+  const handleCloseModdle = () => {
+    setHiddenInput("");
+    setAction("");
+    setInputValue("");
+    setModdleHidden(true);
+  };
+
+  const handleAddSubmit = (event) => {
+    event.preventDefault();
+    if (inputValue.trim() === "") {
+      alert("El nombre no puede estar vacio");
+      return;
+    }
+    axios
+      .post(`http://localhost:8000/${type}`, { nombre: inputValue })
+      .then(function (response) {
+        getList();
+      })
+      .catch((error) => console.error(error));
+
+    handleCloseModdle();
+  };
+
+  const handleAdd = (type) => {
+    setAction("agregar");
+    setInputValue("");
+    setModdleHidden(false);
+  };
+  const handleSubmit = ()=>{ 
+    console.log(action);
+      if ((action === "editar")) {
+        edit();
+      } 
+      else {
+        handleAddSubmit();
+      }
+  }
+  useEffect(() => {
+    getList();
+  }, []);
+
+  return (
+    <div className="generoApp">
+      <div className={`moddle ${moddleHidden ? "hidden" : ""}`}>
+        <div className="out" id="out" onClick={handleCloseModdle}></div>
+        <div className="moddle-element">
+          <i onClick={handleCloseModdle}>X</i>
+          <header>
+            <h3 id="titleModdle">{action === "agregar" ? "AGREGAR" : "EDITAR"}</h3>
+          </header>
+          <main>
+            <form noValidate>
+              <label>nombre</label>
+              <input
+                id="nombre"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+              ></input>
+              <button id="save" type="button" onClick={handleSubmit}>
+                save
+              </button>
+            </form>
+          </main>
+        </div>
+      </div>
+      <header className="TitleHeader">
+        <h2>Lista {props.type}</h2>
+      </header>
+      <main>
+        <div className="container-list">
+          <div>
+            <button onClick={() => handleAdd(type)}>Agregar {type}</button>
+          </div>
+          <table id="tableModdle">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>accion</th>
+              </tr>
+            </thead>
+            <tbody>
+              {lista.map((data) => (
+                <tr key={data.id}>
+                  <td>{data.id}</td>
+                  <td>{data.nombre}</td>
+                  <td>
+                    <button
+                      id="editar"
+                      onClick={() => editList(data.id, data.nombre)}
+                    >
+                      editar
+                    </button>
+                    <button
+                      id="eliminar"
+                      onClick={() => deleteList(data.id)}
+                    >
+                      eliminar
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  );
 }
 
 export default Table;
