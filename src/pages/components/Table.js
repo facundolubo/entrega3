@@ -114,7 +114,7 @@ function Table(props) {
 
   useEffect(() => {
     getList();
-  });
+  },[]);
 
   return (
     <div className="generoApp">
