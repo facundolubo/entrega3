@@ -32,10 +32,10 @@ function Table(props) {
           .delete(`http://localhost:8000/${type}/${id}`)
           .then((response) => {
             getList();
-            setAlert({'state':true,'text':response.statusText,'status':response.status})
+            setAlert({'state': true,'text': response.data,'status':response.status})
           })
           .catch((error) => {
-            setAlert({'state': true,'text':error.response.statusText,'status': error.response.status,});
+            setAlert({'state': true,'text': error.response.data,'status': error.response.status,});
           });
       };
       deletes();
@@ -55,9 +55,9 @@ function Table(props) {
       .put(`http://localhost:8000/${type}/${hiddenInput}`, nombre)
       .then(function (response) {
         getList();
-        setAlert({"state": true,"text": response.statusText,"status": response.status,});
+        setAlert({"state": true,"text": response.data,"status": response.status,});
       })
-      .catch((error) => setAlert({'state': true,'text':error.response.statusText,'status': error.response.status,}));
+      .catch((error) => setAlert({'state': true,'text':error.response.data,'status': error.response.status,}));
     handleCloseModdle();
   };
 
@@ -87,11 +87,11 @@ function Table(props) {
         getList();
          setAlert({
            state: true,
-           text: response.statusText,
+           text: response.data,
            status: response.status,
          });
       })
-      .catch((error) => setAlert({'state': true,'text':error.response.statusText,'status': error.response.status,}));
+      .catch((error) => setAlert({'state': true,'text':error.response.data,'status': error.response.data,}));
     handleCloseModdle();
   };
 
@@ -114,7 +114,7 @@ function Table(props) {
 
   useEffect(() => {
     getList();
-  });
+  }, []);
 
   return (
     <div className="generoApp">
@@ -130,7 +130,7 @@ function Table(props) {
               <label>nombre</label>
               <input id="nombre" value={inputValue}onChange={(e) => setInputValue(e.target.value)}></input>
               <button id="save" type="button" onClick={handleSubmit}>
-                save
+                Guardar
               </button>
             </form>
           </main>
