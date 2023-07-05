@@ -50,11 +50,22 @@ function Dashboard() {
     };
 
     const buscarGeneroPorId = (id) => {
-      return listGen.find((objeto) => objeto.id === id).nombre;
+      let genero = listGen.find((objeto) => objeto.id === id);
+      if(genero === undefined){
+        return
+      }
+      else{
+        return genero.nombre;
+      }
     };
 
     const buscarPlataformaPorId = (id) => {
-      return listPlat.find((objeto) => objeto.id === id).nombre;
+     let genero = listGen.find((objeto) => objeto.id === id);
+     if (genero === undefined) {
+       return;
+     } else {
+       return genero.nombre;
+     }
     };
 
     const handleFilterChange = (e) => {
