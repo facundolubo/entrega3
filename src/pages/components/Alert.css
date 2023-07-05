@@ -1,0 +1,15 @@
+.correct{
+    background-color: #35dc79;
+    box-shadow: 0 0 10px #35dc79;
+    color: #252525;
+    border: 0;
+}
+.alert i{
+    height: 100%;
+    position: absolute;
+    right: 0;
+    display: flex;
+    margin-right: 20px;
+    cursor: pointer;
+    font-size: 20px;
+}

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import "./Table.css";
 import axios from "axios";
+import Alert from "./Alert";
 
 function Table(props) {
   const { type } = props;
@@ -10,6 +11,7 @@ function Table(props) {
   const [hiddenInput, setHiddenInput] = useState("");
   const [moddleHidden, setModdleHidden] = useState(true);
   const [inputValue, setInputValue] = useState("");
+  const [alert, setAlert] = useState({'state':false});
 
   const getList = async () => {
     await axios
@@ -30,10 +32,10 @@ function Table(props) {
           .delete(`http://localhost:8000/${type}/${id}`)
           .then((response) => {
             getList();
-            alert(response.data);
+            setAlert({'state':true,'text':response.statusText,'status':response.status})
           })
           .catch((error) => {
-              alert(error.response.data);
+            setAlert({'state': true,'text':error.response.statusText,'status': error.response.status,});
           });
       };
       deletes();
@@ -53,9 +55,9 @@ function Table(props) {
       .put(`http://localhost:8000/${type}/${hiddenInput}`, nombre)
       .then(function (response) {
         getList();
-        alert(response.data);
+        setAlert({"state": true,"text": response.statusText,"status": response.status,});
       })
-      .catch((error) => console.error(error));
+      .catch((error) => setAlert({'state': true,'text':error.response.statusText,'status': error.response.status,}));
     handleCloseModdle();
   };
 
@@ -83,9 +85,13 @@ function Table(props) {
       .post(`http://localhost:8000/${type}`, { nombre: inputValue })
       .then(function (response) {
         getList();
-        alert(response.data);
+         setAlert({
+           state: true,
+           text: response.statusText,
+           status: response.status,
+         });
       })
-      .catch((error) => console.error(error));
+      .catch((error) => setAlert({'state': true,'text':error.response.statusText,'status': error.response.status,}));
     handleCloseModdle();
   };
 
@@ -102,9 +108,13 @@ function Table(props) {
         handleAddSubmit(e);
       }
   }
+  const handleAlertClose = () => {
+    setAlert({"state":false});
+  };
+
   useEffect(() => {
     getList();
-  }, []);
+  });
 
   return (
     <div className="generoApp">
@@ -118,11 +128,7 @@ function Table(props) {
           <main>
             <form noValidate>
               <label>nombre</label>
-              <input
-                id="nombre"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-              ></input>
+              <input id="nombre" value={inputValue}onChange={(e) => setInputValue(e.target.value)}></input>
               <button id="save" type="button" onClick={handleSubmit}>
                 save
               </button>
@@ -130,6 +136,7 @@ function Table(props) {
           </main>
         </div>
       </div>
+      {alert.state && <Alert respuesta={alert} onClose={handleAlertClose}/>}
       <header className="TitleHeader">
         <h2>Lista {props.type}</h2>
       </header>
