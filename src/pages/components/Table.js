@@ -45,7 +45,7 @@ function Table(props) {
   const edit = (e) => {
     e.preventDefault();
     if (inputValue.trim() === "") {
-      alert("El nombre no puede estar vacio");
+      setAlert({ state: true, text: "el campo no puede estar vacio", status: 400 });
       return;
     }
     const nombre = {
@@ -78,7 +78,11 @@ function Table(props) {
   const handleAddSubmit = (event) => {
     event.preventDefault();
     if (inputValue.trim() === "") {
-      alert("El nombre no puede estar vacio");
+      setAlert({
+        state: true,
+        text: "el campo no puede estar vacio",
+        status: 400,
+      });
       return;
     }
     axios
